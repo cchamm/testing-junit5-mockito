@@ -23,13 +23,21 @@ class SpecialitySDJpaServiceTest {
     @InjectMocks
     SpecialitySDJpaService service;
 
+
+    @Test
+    void testDeleteByObject() {
+        Speciality speciality = new Speciality();
+        service.delete(speciality);
+        verify(specialtyRepository).delete(any(Speciality.class));
+    }
+
     @Test
     void findByIdText() {
         Speciality speciality = new Speciality();
         when(specialtyRepository.findById(1L)).thenReturn(java.util.Optional.of(speciality));
         Speciality foundSpecialty = service.findById(1L);
         assertNotNull(foundSpecialty);
-        verify(specialtyRepository).findById(1L);
+        verify(specialtyRepository).findById(anyLong());
     }
 
     @Test
